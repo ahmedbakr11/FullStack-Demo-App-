@@ -1,6 +1,9 @@
 from decouple import config
+import os
 
 
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Config:
     SECRET_KEY=config('SECRET_KEY')
@@ -8,11 +11,11 @@ class Config:
 
 class Devconfig(Config):
     DEBUG=True
-    DB_URL=config('DB_URL')
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(BASE_DIR, "dev.db")
 
 class Prodconfig(Config):
     DEBUG=False
-    DB_URL=config('DB_URL_PROD')
+    SQLALCHEMY_DATABASE_URI=config('DB_URL_PROD')
     SQLALCHEMY_ECHO=True
 
 class testconfig(Config):
